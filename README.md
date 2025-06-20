@@ -48,10 +48,28 @@ PYTHONPATH=. python vae/scripts/infer.py --ckpt_path pretrained/vae.pt --input a
 # flow 3D generation from images
 PYTHONPATH=. python flow/scripts/infer.py --ckpt_path pretrained/flow.pt --input assets/images/ --output_dir output/
 
-# open local gradio app
+# open local gradio app (single GPU)
 python app.py
+
+# open local gradio app with multi-GPU support
+python app.py --multi
 ```
 
+### Multi-GPU Support
+
+The application supports multi-GPU inference for those who are lack of GPU memory.
+
+- **Single GPU mode** (default): `python app.py`
+- **Multi-GPU mode**: `python app.py --multi`
+
+In multi-GPU mode:
+- The flow model is placed on GPU 0
+- The VAE model is placed on GPU 1 (if available)
+- Automatic memory management and data transfer between GPUs
+- Reduced memory pressure per GPU
+- Better performance with 2 or more GPUs
+
+If only one GPU is available, the system automatically falls back to single-GPU behavior even in multi-GPU mode.
 
 ### Data Processing
 
